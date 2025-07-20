@@ -1,5 +1,6 @@
 package audit.config;
 
+import audit.AuditMode;
 import audit.AuditSender;
 import audit.impl.ConsoleAuditSender;
 import audit.impl.KafkaAuditSender;
@@ -30,4 +31,16 @@ class AuditAutoConfigurationTest {
                      assertThat(context.getBean(AuditSender.class)).isInstanceOf(KafkaAuditSender.class);
                  });
      }
+
+
+    @Test
+    void whenAuditModeNotSet_thenConsoleAuditSenderIsCreatedByDefault() {
+        contextRunner
+                .run(context -> {
+                    assertThat(context).hasSingleBean(AuditProperties.class);
+                    assertThat(context).hasSingleBean(ConsoleAuditSender.class);
+                    AuditProperties props = context.getBean(AuditProperties.class);
+                    assertThat(props.getMode()).isEqualTo(AuditMode.CONSOLE);
+                });
+    }
 }
