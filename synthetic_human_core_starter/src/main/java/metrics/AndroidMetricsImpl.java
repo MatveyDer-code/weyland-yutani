@@ -1,37 +1,55 @@
 package metrics;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AndroidMetricsImpl {
-    private final AtomicInteger currentQueueSize = new AtomicInteger(0);
-    private final ConcurrentHashMap<String, AtomicInteger> completedTasksPerAuthor = new ConcurrentHashMap<>();
+public class AndroidMetricsImpl implements AndroidMetrics {
+    private final MeterRegistry meterRegistry;
 
-    public int getCurrentQueueSize() {
-        return currentQueueSize.get();
+    private final Map<String, Counter> completedTasksCounters = new ConcurrentHashMap<>();
+
+    private final AtomicInteger queueSize = new AtomicInteger(0);
+
+    public AndroidMetricsImpl(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+
+        Gauge.builder("android.queue.size", queueSize, AtomicInteger::get)
+                .register(meterRegistry);
     }
 
-    public void incrementQueueSize() {
-        currentQueueSize.incrementAndGet();
-    }
-
-    // Метод для уменьшения текущего количества задач в очереди
-    public void decrementQueueSize() {
-        currentQueueSize.decrementAndGet();
-    }
-
-    // Увеличивает счетчик выполненных задач для автора
+    @Override
     public void incrementCompletedTasks(String author) {
-        completedTasksPerAuthor
-                .computeIfAbsent(author, a -> new AtomicInteger(0))
-                .incrementAndGet();
+        completedTasksCounters
+                .computeIfAbsent(author, a ->
+                        Counter.builder("android.commands.completed")
+                                .tag("author", a)
+                                .register(meterRegistry))
+                .increment();
     }
 
-    public Map<String, Integer> getCompletedCommandsPerAuthor() {
-        // Преобразуем AtomicInteger в Integer для удобства
-        Map<String, Integer> result = new ConcurrentHashMap<>();
-        completedTasksPerAuthor.forEach((key, value) -> result.put(key, value.get()));
-        return result;
+    @Override
+    public int getCompletedTasks(String author) {
+        Counter counter = completedTasksCounters.get(author);
+        return counter == null ? 0 : (int) counter.count();
+    }
+
+    @Override
+    public void incrementQueueSize() {
+        queueSize.incrementAndGet();
+    }
+
+    @Override
+    public void decrementQueueSize() {
+        queueSize.decrementAndGet();
+    }
+
+    @Override
+    public int getCurrentQueueSize() {
+        return queueSize.get();
     }
 }

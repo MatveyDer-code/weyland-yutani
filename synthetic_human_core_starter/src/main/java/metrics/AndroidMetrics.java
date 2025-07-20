@@ -1,8 +1,13 @@
 package metrics;
 
-import java.util.Map;
-
 public interface AndroidMetrics {
+    void incrementCompletedTasks(String author);
+
+    int getCompletedTasks(String author);
+
+    void incrementQueueSize();
+
+    void decrementQueueSize();
+
     int getCurrentQueueSize();
-    Map<String, Integer> getCompletedCommandsPerAuthor();
 }
