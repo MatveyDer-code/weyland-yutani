@@ -1,7 +1,7 @@
-package audit.impl;
+package starter.audit.impl;
 
-import audit.AuditSender;
-import audit.model.AuditEvent;
+import starter.audit.AuditSender;
+import starter.audit.model.AuditEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 
 public class KafkaAuditSender implements AuditSender {

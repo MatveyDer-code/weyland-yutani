@@ -1,6 +1,6 @@
-package audit;
+package starter.audit;
 
-import audit.model.AuditEvent;
+import starter.audit.model.AuditEvent;
 
 public interface AuditSender {
     void sendAuditEvent(AuditEvent event);

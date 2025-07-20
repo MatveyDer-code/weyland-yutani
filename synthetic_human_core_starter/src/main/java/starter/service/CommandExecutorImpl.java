@@ -1,9 +1,10 @@
-package service;
+package starter.service;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import model.Command;
+import starter.model.Command;
 import org.slf4j.Logger;
+import starter.model.CommandPriority;
 
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -44,7 +45,7 @@ public class CommandExecutorImpl implements CommandExecutor {
             throw new IllegalArgumentException("Invalid command: " + violations);
         }
 
-        if (command.getPriority() == model.CommandPriority.CRITICAL) {
+        if (command.getPriority() == CommandPriority.CRITICAL) {
             // Немедленное исполнение CRITICAL команды
             logger.info("Executing CRITICAL command: " + command);
         } else {

@@ -1,6 +1,6 @@
-package service;
+package starter.service;
 
-import model.Command;
+import starter.model.Command;
 
 public interface CommandExecutor {
     void execute(Command command);

@@ -1,4 +1,4 @@
-package metrics;
+package starter.metrics;
 
 public interface AndroidMetrics {
     void incrementCompletedTasks(String author);

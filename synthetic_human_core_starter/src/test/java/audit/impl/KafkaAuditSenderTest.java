@@ -1,6 +1,7 @@
 package audit.impl;
 
-import audit.model.AuditEvent;
+import starter.audit.impl.KafkaAuditSender;
+import starter.audit.model.AuditEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

@@ -1,6 +1,8 @@
 package audit;
 
-import audit.model.AuditEvent;
+import starter.audit.AuditAspect;
+import starter.audit.AuditSender;
+import starter.audit.model.AuditEvent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,9 +1,11 @@
 package audit.config;
 
-import audit.AuditMode;
-import audit.AuditSender;
-import audit.impl.ConsoleAuditSender;
-import audit.impl.KafkaAuditSender;
+import starter.audit.AuditMode;
+import starter.audit.AuditSender;
+import starter.audit.config.AuditAutoConfiguration;
+import starter.audit.config.AuditProperties;
+import starter.audit.impl.ConsoleAuditSender;
+import starter.audit.impl.KafkaAuditSender;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;

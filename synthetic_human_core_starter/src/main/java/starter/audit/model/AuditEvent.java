@@ -1,4 +1,4 @@
-package audit.model;
+package starter.audit.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package model;
+package starter.model;
 
 public enum CommandPriority {
     COMMON,

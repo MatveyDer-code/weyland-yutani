@@ -1,6 +1,6 @@
-package audit;
+package starter.audit;
 
-import audit.model.AuditEvent;
+import starter.audit.model.AuditEvent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

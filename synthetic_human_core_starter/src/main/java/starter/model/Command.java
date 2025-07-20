@@ -1,4 +1,4 @@
-package model;
+package starter.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;

@@ -1,35 +1,25 @@
 package audit.impl;
 
-import audit.model.AuditEvent;
-import com.github.valfirst.slf4jtest.TestLogger;
-import com.github.valfirst.slf4jtest.TestLoggerFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
+import starter.audit.impl.ConsoleAuditSender;
+import starter.audit.model.AuditEvent;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.contains;
 
 class ConsoleAuditSenderTest {
-    private ConsoleAuditSender auditSender;
-    private TestLogger testLogger;
-
-    @BeforeEach
-    void setUp() {
-        auditSender = new ConsoleAuditSender();
-        testLogger = TestLoggerFactory.getTestLogger(ConsoleAuditSender.class);
-        testLogger.clear();
-    }
 
     @Test
     void shouldLogAuditEvent() {
+        Logger mockLogger = Mockito.mock(Logger.class);
+        ConsoleAuditSender auditSender = new ConsoleAuditSender(mockLogger);
+
         AuditEvent event = new AuditEvent("testMethod", new Object[]{"param"}, "result", null);
 
         auditSender.sendAuditEvent(event);
 
-        assertThat(testLogger.getLoggingEvents())
-                .anyMatch(loggingEvent ->
-                        loggingEvent.getMessage().contains("AUDIT (console):") &&
-                        loggingEvent.getArguments().contains(event));
-
+        verify(mockLogger).info(contains("AUDIT (console):"), Mockito.eq(event));
     }
 }

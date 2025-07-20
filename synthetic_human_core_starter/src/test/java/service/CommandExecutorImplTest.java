@@ -5,7 +5,9 @@ import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import service.CommandExecutorImpl;
+import starter.model.Command;
+import starter.model.CommandPriority;
+import starter.service.CommandExecutorImpl;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package audit;
+package starter.audit;
 
 public enum AuditMode {
     CONSOLE,
