@@ -24,6 +24,7 @@ repositories {
 }
 
 extra["springModulithVersion"] = "1.4.1"
+extra["slf4jTestVersion"] = "3.0.1"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
@@ -45,6 +46,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 	testImplementation("org.springframework.modulith:spring-modulith-starter-test")
+	testImplementation("com.github.valfirst:slf4j-test:${property("slf4jTestVersion")}")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
