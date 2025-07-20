@@ -11,8 +11,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class CommandExecutorImplTest {
     private static Validator validator;
@@ -90,5 +89,23 @@ class CommandExecutorImplTest {
                 LocalDate.now()
         );
         assertThrows(IllegalStateException.class, () -> executor.execute(commonCommand));
+    }
+
+    @Test
+    void commonCommandIsQueuedAndLogged() throws InterruptedException {
+        Command commonCommand = new Command(
+                "Run diagnostics",
+                CommandPriority.COMMON,
+                "Ash",
+                LocalDate.now()
+        );
+
+        executor.execute(commonCommand);
+
+        // Подождём немного, чтобы поток успел обработать
+        Thread.sleep(200);
+
+        //Выполняем "COMMON "команды
+        verify(loggerMock, atLeastOnce()).info(contains("COMMON"));
     }
 }

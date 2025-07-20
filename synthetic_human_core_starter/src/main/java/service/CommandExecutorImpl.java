@@ -16,7 +16,6 @@ public class CommandExecutorImpl implements CommandExecutor {
     private final BlockingQueue<Command> queue;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final Logger logger;
-    private boolean enableProcessing;
 
     public CommandExecutorImpl(Validator validator, int queueCapacity, Logger logger) {
         this.validator = validator;
@@ -28,6 +27,7 @@ public class CommandExecutorImpl implements CommandExecutor {
         executor.submit(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
+                    Thread.sleep(500);
                     Command cmd = queue.take();
                     logger.info("Executing COMMON command: " + cmd);
                 } catch (InterruptedException e) {
